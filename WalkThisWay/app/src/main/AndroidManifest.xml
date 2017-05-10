@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Listing" />
+        <activity android:name=".Summary" />
+        <activity android:name=".Navigation"></activity>
     </application>
 
 </manifest>
