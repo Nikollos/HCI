@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.ac.univie.cosy.hci_gruppe15.walkthisway">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,35 +18,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".Listing" />
+        <!--
+        <activity android:name=".Listing" />
          <activity android:name=".Summary" />
-        <activity android:name=".Navigation"></activity>-->
+        <activity android:name=".Navigation"></activity>
+        -->
 
+        <activity
+            android:name=".Summary"
+            android:parentActivityName=".MainActivity">
 
-        <activity android:name=".Summary"
-            android:parentActivityName=".MainActivity" >
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".Listing"
+            android:parentActivityName=".MainActivity">
 
-        <activity android:name=".Listing"
-            android:parentActivityName=".MainActivity" >
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".Navigation"
+            android:parentActivityName=".MainActivity">
 
-        <activity android:name=".Navigation"
-            android:parentActivityName=".MainActivity" >
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
+        <activity android:name=".Browser"></activity>
     </application>
 
 </manifest>
