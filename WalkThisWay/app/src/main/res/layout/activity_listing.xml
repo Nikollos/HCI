@@ -8,8 +8,9 @@
 
     <ListView
         android:id="@+id/list"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-    </ListView>
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="55dp"></ListView>
 
 </android.support.constraint.ConstraintLayout>
