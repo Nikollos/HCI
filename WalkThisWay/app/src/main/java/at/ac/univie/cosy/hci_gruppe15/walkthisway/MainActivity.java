@@ -1,9 +1,8 @@
 package at.ac.univie.cosy.hci_gruppe15.walkthisway;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -34,14 +33,15 @@ public class MainActivity extends AppCompatActivity {
         final Button btn_list = (Button) findViewById(R.id.btn_list);
         btn_list.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Intent intent = new Intent(MainActivity.this, Summary.class);
-                //startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, Listing.class);
+                startActivity(intent);
 
-                setTitle("Kultur");
+                /*setTitle("Kultur");
                 ListFragment listFragment = new ListFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
-                fragmentManager.beginTransaction().replace(R.id.fragment_frame, listFragment).addToBackStack("Nearby").commit();
+                fragmentManager.beginTransaction().replace(R.id.fragment_frame, listFragment).addToBackStack("Nearby").commit();*/
+
             }
         });
        /* =========================================================================================*/
