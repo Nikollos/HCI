@@ -1,21 +1,37 @@
 package at.ac.univie.cosy.hci_gruppe15.walkthisway;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Listing extends AppCompatActivity {
 
     ListView listView ;
 
+    //String x um Auswahl durch Button auszulesen
+    String x;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
+
+        //String x wird duch Intent ausgelsen
+        Intent intent = getIntent();
+        x = intent.getStringExtra("value");
+
+
+        // TextView nur zum testen ob richtig übergeben wird
+        // Es passt, Nicole kann jetzt anhand von if(x=="kultur") den jeweiligen listView aufrufen
+        // Der TextView test kann gelöscht werden
+        TextView test = (TextView) findViewById(R.id.testX);
+        test.setText(x);
 
         listView = (ListView) findViewById(R.id.list);
 
