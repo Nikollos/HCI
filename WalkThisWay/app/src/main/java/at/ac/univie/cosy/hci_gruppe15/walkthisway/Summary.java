@@ -33,6 +33,9 @@ public class Summary extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //ToDo  Holen von Deststinrg von Nici
+        setDestImage("");
             // URL Eigenschaften
             String urlBasis = "https://maps.googleapis.com/maps/api/place/details/json?";
             String placeID  = "placeid="    + "ChIJdWDYUZoHbUcRTq4MHzRMp2s" + "&";
@@ -46,7 +49,7 @@ public class Summary extends AppCompatActivity {
                     .url(jsonURL )
                     .build();
             Call call = client.newCall(request);
-        final String[] destination = new String[1];
+            final String[] destination = new String[1];
             call.enqueue(new Callback() {
 
             @Override
@@ -134,5 +137,40 @@ public class Summary extends AppCompatActivity {
                 //startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://www.google.com")));
             }
         });
+    }
+    /*============================================================================================================================
+    Methode: setDestImage für setzen von Sehenswürdigkeits Fotos
+    ============================================================================================================================*/
+    void setDestImage(String str){
+        try {
+                //ToDo str n erstezten durcz Dest name oder place_id
+                ImageView iv_destionation = (ImageView) findViewById(R.id.iv_destionation_icon);
+                switch (str) {
+                    case "str1": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str2": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str3": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str4": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str5": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str6": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str7": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str8": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                    case "str9": iv_destionation.setImageResource(R.drawable.clock_button);
+                        break;
+                }
+                iv_destionation.setImageResource(R.drawable.clock_button);
+        }catch (final Exception e){
+        Log.e("a", e +" Set Image Error");
+    }
+        //lbl_oezeiten_text.setText("0 "+"km" ); //ToDo Entfernungsvariable hier eingtragen
+
+
     }
 }
