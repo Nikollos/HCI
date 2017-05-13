@@ -35,11 +35,11 @@
         android:layout_marginLeft="8dp" />
 
     <TextView
-        android:id="@+id/testX"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="256dp"
-        tools:layout_editor_absoluteY="77dp" />
+        tools:layout_editor_absoluteX="244dp"
+        tools:layout_editor_absoluteY="42dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -20,8 +20,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +46,15 @@ public class Listing extends AppCompatActivity {
 
     //Standort-Adresse als String
     String address;
+
+                /*Distanz zu Ort++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Double dist;
+                +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+                /*Adresse++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    int hausnr;
+    String strase;
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
     //TAG zum Debuggen
     String TAG = "MAIN_LOG: ";
@@ -102,12 +120,6 @@ public class Listing extends AppCompatActivity {
         x = intent.getStringExtra("value");
 
 
-        // TextView nur zum testen ob richtig übergeben wird
-        // Es passt, Nicole kann jetzt anhand von if(x=="kultur") den jeweiligen listView aufrufen
-        // Der TextView test kann gelöscht werden
-        TextView test = (TextView) findViewById(R.id.testX);
-        test.setText(x);
-
         //Liste erstellen für die Sehenswürdigkeiten
         List<String> list = new ArrayList<>();
 
@@ -136,6 +148,32 @@ public class Listing extends AppCompatActivity {
                 //hier wird Erens Activity aufgerufen
             }
         });
+
+        /* Zum Auslesen des Standortes++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        new JSONTask1().execute("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyBvmVXFnWpSLHGLiLZINkChy_xoJVtj3hI");
+
+        TextView textView4 = (TextView) findViewById(R.id.textView4);
+        textView4.setText(strase + "," + hausnr);
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+
+
+        /*HARDCODE, hier sollte aber schleife die die Elemente des ListView durchgeht++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        String a = "https://maps.googleapis.com/maps/api/directions/json?origin=";
+
+        String b = "&destination=";
+
+        String c = "&key=AIzaSyBvmVXFnWpSLHGLiLZINkChy_xoJVtj3hI";
+
+        String dest = "Währingerstrasse+29";
+
+        String fertig = a + strase + "+" + hausnr + b + dest + c;
+
+        new JSONTask().execute(fertig);
+
+        ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
     }
 
 
@@ -203,7 +241,7 @@ public class Listing extends AppCompatActivity {
             try {
                 //Koordinaten in Addressenstring umwandeln
                 address = AddressJSONParser.getAddress(s);
-                //Adresse in Textfelt schreiben
+                //Adresse in Textfeld schreiben
                 textView.append("\n " + address);
 
             } catch (JSONException e) {
@@ -212,4 +250,156 @@ public class Listing extends AppCompatActivity {
             }
         }
     }
+
+
+
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public class JSONTask1 extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            //Initialisieren von einer Internetverbindung und des BufferReader um Daten der API damit auszulesen
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+
+            try {
+                //url erhält URL um Verbindung aufzubauen
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                //InputStream um Daten zu leiten
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+                //StringBuffer initialisieren
+                StringBuffer buffer = new StringBuffer();
+
+                //Solange der reader Daten ausliest sollen diese im Buffer angefügt werden
+                String line = "";
+                while ((line = reader.readLine()) != null){
+                    buffer.append(line);
+                }
+
+                //String Variable um Daten aus buffer zu speichern
+                String finalJson = buffer.toString();
+
+                //Hier findet das Parsing statt
+                JSONObject root = new JSONObject(finalJson);
+                JSONArray results = root.getJSONArray("results");
+                JSONArray compos = results.getJSONArray(0);
+                JSONObject nr = compos.getJSONObject(0);
+                hausnr = nr.getInt("long_name");
+                JSONObject strasse = compos.getJSONObject(1);
+                strase = strasse.getString("long_name");
+
+                return "blabla";
+
+                //Exception handling
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally{
+                if(connection != null){
+                    connection.disconnect();
+                }
+                try {
+                    if(reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } return "Fehler beim Auslesen des Standortes";
+        }
+
+        @Override
+        protected void onPostExecute(String x) {
+            super.onPostExecute(x);
+        }
+    }
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+    /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public class JSONTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            //Initialisieren von einer Internetverbindung und des BufferReader um Daten der API damit auszulesen
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+
+            try {
+                //url erhält URL um Verbindung aufzubauen
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                //InputStream um Daten zu leiten
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+                //StringBuffer initialisieren
+                StringBuffer buffer = new StringBuffer();
+
+                //Solange der reader Daten ausliest sollen diese im Buffer angefügt werden
+                String line = "";
+                while ((line = reader.readLine()) != null){
+                    buffer.append(line);
+                }
+
+                //String Variable um Daten aus buffer zu speichern
+                String finalJson = buffer.toString();
+
+                //Hier findet das Parsing statt
+                JSONObject root = new JSONObject(finalJson);
+                JSONArray routes = root.getJSONArray("routes");
+                JSONArray legs = routes.getJSONArray(0);
+                JSONObject distance = legs.getJSONObject(0);
+                JSONObject jsonDistance = distance.getJSONObject("text");
+
+                String distanz = jsonDistance.getString("text");
+                dist = Double.parseDouble(distanz);
+                dist = dist*1.6;
+
+                return "Entfernung:";
+
+                //Exception handling
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally{
+                if(connection != null){
+                    connection.disconnect();
+                }
+                try {
+                    if(reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } return "Fehler beim Berechnen der Entfernung";
+        }
+
+        @Override
+        protected void onPostExecute(String x) {
+            super.onPostExecute(x);
+        }
+    }+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+
+
 }
+
