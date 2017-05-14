@@ -40,15 +40,14 @@ public class Summary extends AppCompatActivity {
         });
 
         //ToDo  Holen von Deststinrg von Nici
-
+        // Hier werden die Daten bzw. Informationen von Listing Activity geholt
         Intent intento = getIntent();
         name = intento.getStringExtra("name");
         zeit = intento.getStringExtra("minuten");
 
         TextView lbl_entfernung_text = (TextView) findViewById(R.id.lbl_entfernung);
-        lbl_entfernung_text.setText(zeit);
+        lbl_entfernung_text.setText(name);
 
-        setDestImage("");
             // URL Eigenschaften
             String urlBasis = "https://maps.googleapis.com/maps/api/place/details/json?";
             String placeID  = "placeid="    + "ChIJdWDYUZoHbUcRTq4MHzRMp2s" + "&";
@@ -83,11 +82,15 @@ public class Summary extends AppCompatActivity {
                                 JSONObject result = reader.getJSONObject("result");
                                 // Befüllen von Destinations Name
                                 TextView lbl_destName_text = (TextView) findViewById(R.id.lbl_destName);
-                                lbl_destName_text.setText(result.getString("name"));
-                                destination[0] = result.getString("name");
-                                // Befüllen von ist offen
+                                //lbl_destName_text.setText(result.getString("name")); // kann auch von Json geholt werden
+                                lbl_destName_text.setText(name);
+                                //destination[0] = result.getString("name");    // kann auch von Json geholt werden
+                                destination[0] = name;
+                                // Befüllen von ist offen                   // befüllen von Status Feld
+                                setDestImage(name);
                                 String open_now = "nill";
                                 if (result.has("opening_hours")) {
+                                    // Hier wird mit Json
                                     JSONObject opening_hours = result.getJSONObject("opening_hours");
                                     if (opening_hours.has("open_now")) {
                                         open_now = opening_hours.getString("open_now");
@@ -128,29 +131,29 @@ public class Summary extends AppCompatActivity {
                 if (destination[0].equals(""))
                     wiki_url_param = "";
                 else if (destination[0].equals("Schloss Schönbrunn"))
-                    wiki_url_param = "Burggarten_(Wien)";
+                    wiki_url_param = "Schloss_Schönbrunn";
                 else if (destination[0].equals("Belvedere"))
                     wiki_url_param = "";
                 else if (destination[0].equals("Kunsthistorisches Museum"))
-                    wiki_url_param = "";
+                    wiki_url_param = "Kunsthistorisches_Museum";
                 else if (destination[0].equals("Bitzingers Augustinerkeller"))
                     wiki_url_param = "";
                 else if (destination[0].equals("Gerstner Cafe-Restaurant"))
-                    wiki_url_param = "";
+                    wiki_url_param = "Café_Guerbois";
                 else if (destination[0].equals("Figlmüller"))
-                    wiki_url_param = "";
+                    wiki_url_param = "Hans_Figlmüller";
                 else if (destination[0].equals("Fluc"))
                     wiki_url_param = "";
                 else if (destination[0].equals("B72"))
-                    wiki_url_param = "";
+                    wiki_url_param = "Weizer_Straße";
                 else if (destination[0].equals("Futuregarden"))
                     wiki_url_param = "";
                 else if (destination[0].equals("Haus des Meeres"))
-                    wiki_url_param = "";
+                    wiki_url_param = "Haus_des_Meeres";
                 else if (destination[0].equals("Volksoper"))
-                    wiki_url_param = "";
+                    wiki_url_param = "Volksoper_Wien";
                 else if (destination[0].equals("Volkstheater"))
-                    wiki_url_param = "";
+                    wiki_url_param = "Volkstheater_(Wien)";
                 String wiki_url = wiki_base_url + wiki_url_param ;
                 intent.putExtra("var_website_url", String.valueOf (wiki_url));
                 startActivity(intent);
@@ -192,12 +195,9 @@ public class Summary extends AppCompatActivity {
                     case "Volkstheater": iv_destionation.setImageResource(R.drawable.volktheater);
                         break;
                 }
-                iv_destionation.setImageResource(R.drawable.clock_button);
         }catch (final Exception e){
         Log.e("a", e +" Set Image Error");
     }
         //lbl_oezeiten_text.setText("0 "+"km" ); //ToDo Entfernungsvariable hier eingtragen
-
-
     }
 }
