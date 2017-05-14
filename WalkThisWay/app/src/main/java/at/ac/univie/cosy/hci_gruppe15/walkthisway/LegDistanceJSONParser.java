@@ -1,5 +1,7 @@
 package at.ac.univie.cosy.hci_gruppe15.walkthisway;
 
+import android.content.Intent;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +23,7 @@ public class LegDistanceJSONParser {
         JSONObject duration = leg.getJSONObject("duration");
         String minutes = duration.getString("text");
         //Log.i("JSON_LOG", minutes);
+
 
         return minutes;
     }

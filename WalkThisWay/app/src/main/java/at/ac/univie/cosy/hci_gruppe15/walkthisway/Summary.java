@@ -20,6 +20,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class Summary extends AppCompatActivity {
+
+    //Hier sind Name der ausgewählten Sehenwürdigkeit und die Zeit die man hin braucht
+    String name;
+    String zeit;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,14 @@ public class Summary extends AppCompatActivity {
         });
 
         //ToDo  Holen von Deststinrg von Nici
+
+        Intent intento = getIntent();
+        name = intento.getStringExtra("name");
+        zeit = intento.getStringExtra("minuten");
+
+
+
+
         setDestImage("");
             // URL Eigenschaften
             String urlBasis = "https://maps.googleapis.com/maps/api/place/details/json?";
@@ -99,7 +113,7 @@ public class Summary extends AppCompatActivity {
         });
 
         TextView lbl_oezeiten_text = (TextView) findViewById(R.id.lbl_entfernung);
-        lbl_oezeiten_text.setText("0 "+"km" ); //ToDo Entfernungsvariable hier eingtragen
+        lbl_oezeiten_text.setText(zeit); //ToDo Entfernungsvariable hier eingtragen
         /*============================================================================================================================
             Wiki Button
          ============================================================================================================================*/
