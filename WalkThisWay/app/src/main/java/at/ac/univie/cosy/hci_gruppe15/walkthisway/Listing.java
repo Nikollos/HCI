@@ -20,19 +20,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,8 +34,7 @@ public class Listing extends AppCompatActivity {
     double latitude;
     double longitude;
 
-    //Standort-Adresse als String
-    String address;
+    public static final String ADDRESS = "ADDRESS";
 
                 /*Distanz zu Ort++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 Double dist;
@@ -121,20 +110,34 @@ public class Listing extends AppCompatActivity {
 
 
         //Liste erstellen für die Sehenswürdigkeiten
-        List<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
 
         //durch Switch-Cases festlegen, welche Liste angezeigt werden soll
         listView = (ListView) findViewById(R.id.list);
-        switch(x) {
-            case("kultur"): list.add("Schloss Schönbrunn"); list.add("Belvedere"); list.add("Kunsthistorisches Museum");
+        switch (x) {
+            case ("kultur"):
+                list.add("Schloss Schönbrunn");
+                list.add("Belvedere");
+                list.add("Kunsthistorisches Museum");
                 break;
-            case("essentrinken"): list.add("Bitzinger's Augustinerkeller"); list.add("Gerstner Café-Restaurant"); list.add("Figlmüller");
+            case ("essentrinken"):
+                list.add("Bitzingers Augustinerkeller");
+                list.add("Gerstner Cafe-Restaurant");
+                list.add("Figlmüller");
                 break;
-            case("nightlife"): list.add("Fluc"); list.add("B72"); list.add("Futuregarden");
+            case ("nightlife"):
+                list.add("Fluc");
+                list.add("B72");
+                list.add("Futuregarden");
                 break;
-            case("unterhaltung"): list.add("Haus des Meeres"); list.add("Volksoper"); list.add("Volkstheater");
+            case ("unterhaltung"):
+                list.add("Haus des Meeres");
+                list.add("Volksoper");
+                list.add("Volkstheater");
                 break;
         }
+
+        createUrl(list);
 
         //Adapter für die Listview erstellen
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.list_item_textview, list);
@@ -176,6 +179,28 @@ public class Listing extends AppCompatActivity {
 
     }
 
+    public void createUrl(ArrayList<String> list){
+        ArrayList<String> newlist = new ArrayList<>();
+        for(String item : list) {
+            item = item.replaceAll(" ", "+");
+            item = item.concat(""+"+wien");
+            newlist.add(item);
+        }
+
+        //hier stoppt die App immer aus irgendeinem Grund
+        /*Intent intent = getIntent();
+        String address = intent.getStringExtra("ADDRESS");
+        Log.i(TAG, address);*/
+
+        //HARDCODE TEST, weil ich es nicht geschafft habe die globale Variable address zu verwenden.
+        String addressTest = "Währingerstraße+29+Wien";
+        String url1 = "https://maps.googleapis.com/maps/api/directions/json?origin="+ addressTest + "&destination=" + newlist.get(0) +"4&key=AIzaSyBvmVXFnWpSLHGLiLZINkChy_xoJVtj3hI";
+
+        LegDistanceHandler legDistanceHandler = new LegDistanceHandler();
+        legDistanceHandler.execute(url1);
+        //Log.i("STRING_TEST", address);
+        Log.i("STRING_TEST", url1);
+    }
 
     //Methode zum Updaten der URL, mit Koordinaten als Parameter
     private void updateAddress(double latitude, double longitude) {
@@ -210,7 +235,6 @@ public class Listing extends AppCompatActivity {
         }
     }
 
-
     //Klasse zum Managen der Http-Verbindung und des JSON-Parsing
     public class MapHandler extends AsyncTask<String, Void, String> {
         OkHttpClient client = new OkHttpClient();
@@ -240,7 +264,10 @@ public class Listing extends AppCompatActivity {
 
             try {
                 //Koordinaten in Addressenstring umwandeln
-                address = AddressJSONParser.getAddress(s);
+                String address = AddressJSONParser.getAddress(s);
+
+                Intent intent = new Intent(getApplicationContext(), Listing.class);
+                intent.putExtra("ADDRESS", address);
                 //Adresse in Textfeld schreiben
                 textView.append("\n " + address);
 
@@ -250,6 +277,45 @@ public class Listing extends AppCompatActivity {
             }
         }
     }
+
+    //gleiches wie bei MapHandler, kümmert sich um Http connection und ruft JSONParser Klasse auf
+    public class LegDistanceHandler extends AsyncTask<String, Void, String> {
+        OkHttpClient client = new OkHttpClient();
+
+        @Override
+        protected String doInBackground(String... params) {
+            //Http-Request
+            Request.Builder builder = new Request.Builder();
+
+            builder.url(params[0]);
+            Request request = builder.build();
+            try {
+                //Http-Response
+                Response response = client.newCall(request).execute();
+
+                return response.body().string();
+            } catch (Exception e) {
+                Log.e(TAG, "HttpRequest for calculating leg distance Failed");
+                Log.e(TAG, e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                //ruft Klasse zum Auslesen der Gehminuten auf
+                LegDistanceJSONParser.getLegDistance(s);
+
+            } catch (JSONException e) {
+                Log.e(TAG, "JSON Parsing failed");
+                Log.e(TAG, e.getMessage());
+            }
+
+        }
+    }
+}
 
 
 
@@ -399,7 +465,4 @@ public class Listing extends AppCompatActivity {
         }
     }+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-
-
-}
 
