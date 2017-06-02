@@ -149,7 +149,7 @@ public class Listing extends AppCompatActivity {
 
                 s = listView.getItemAtPosition(position).toString();
 
-                //hier wird Erens Activity aufgerufen
+                //hier wird die Summary Activity aufgerufen
                 Intent y = new Intent(Listing.this, Summary.class);
                 y.putExtra("name", s);
                 y.putExtra("minuten", minutes);

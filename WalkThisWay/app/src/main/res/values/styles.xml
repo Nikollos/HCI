@@ -17,4 +17,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Theme.AppCompat.NoActionBar.Light.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="WalkThisWayTheme" parent="Theme.AppCompat.NoActionBar.Light.NoActionBar" >
+        <item name="android:colorBackground">@color/background_material_light</item>
+        <item name="android:colorForeground">@color/foreground_material_light</item>
+        <item name="android:navigationBarColor">?attr/colorAccent</item>
+        <item name="android:statusBarColor">@color/colorMaterial</item>
+        <item name="android:textColorPrimary">@color/primary_text_material_light</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_material_dark</item>
+        <item name="android:textColorSecondary">@color/secondary_text_material_light</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_material_dark</item>
+    </style>
+
 </resources>
