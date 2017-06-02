@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="at.ac.univie.cosy.hci_gruppe15.walkthisway.MainActivity">
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_frame"
         android:layout_width="0dp"
         android:layout_height="439dp"
@@ -89,7 +90,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.066"
-        app:layout_constraintHorizontal_bias="0.496" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

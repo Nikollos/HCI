@@ -153,13 +153,9 @@ public class Listing extends AppCompatActivity {
                 Intent y = new Intent(Listing.this, Summary.class);
                 y.putExtra("name", s);
                 y.putExtra("minuten", minutes);
-
                 startActivity(y);
-
             }
         });
-
-
     }
 
     public void createUrl(ArrayList<String> list){
