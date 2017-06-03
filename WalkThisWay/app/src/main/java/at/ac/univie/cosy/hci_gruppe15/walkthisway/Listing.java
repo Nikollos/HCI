@@ -1,6 +1,7 @@
 package at.ac.univie.cosy.hci_gruppe15.walkthisway;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -61,6 +63,12 @@ public class Listing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
+        Context context = getApplicationContext();
+        CharSequence text = "Wähle eine der Sehenswürdigkeiten und erhalte mehr Information.";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
 
         textView = (TextView) findViewById(R.id.current_location_textview);
 
