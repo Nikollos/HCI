@@ -83,7 +83,7 @@ public class Listing extends AppCompatActivity {
                 //Berechnung der Koordinaten
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-
+                System.out.print( " koordinaten -" + latitude + " " + longitude);
                 //Url updaten
                 updateAddress(latitude, longitude);
             }

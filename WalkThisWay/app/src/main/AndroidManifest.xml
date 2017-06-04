@@ -1,56 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="at.ac.univie.cosy.hci_gruppe15.walkthisway">
+package="at.ac.univie.cosy.hci_gruppe15.walkthisway">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/WalkThisWayTheme">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBvmVXFnWpSLHGLiLZINkChy_xoJVtj3hI"/>
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/WalkThisWayTheme">
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <meta-data android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBvmVXFnWpSLHGLiLZINkChy_xoJVtj3hI" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <!--
+    <activity android:name=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <!--
         <activity android:name=".Listing" />
          <activity android:name=".Summary" />
         <activity android:name=".Navigation"></activity>
         -->
 
-        <activity
-            android:name=".Summary"
-            android:parentActivityName=".MainActivity">
+    <activity android:name=".Summary" android:parentActivityName=".MainActivity">
 
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".Navigation"
-            android:parentActivityName=".MainActivity">
+        <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".Navi" android:parentActivityName=".MainActivity">
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity" />
+    </activity>
 
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity android:name=".Browser" />
-        <activity android:name=".Listing"></activity>
-    </application>
+    <activity android:name=".Navigation" android:parentActivityName=".MainActivity">
+        <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity" />
+    </activity>
+    <activity android:name=".Browser" />
+    <activity android:name=".Listing"></activity>
+</application>
 
 </manifest>
+

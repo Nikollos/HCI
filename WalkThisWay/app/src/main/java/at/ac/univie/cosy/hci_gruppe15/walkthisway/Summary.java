@@ -30,20 +30,54 @@ public class Summary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
-        ImageView btn_walk_button_icon= (ImageView) findViewById(R.id.iv_walk_button_icon);
-        btn_walk_button_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Summary.this, Navigation.class);
-                startActivity(intent);
-            }
-        });
-
         //ToDo  Holen von Deststinrg von Nici
         // Hier werden die Daten bzw. Informationen von Listing Activity geholt
         Intent intento = getIntent();
         name = intento.getStringExtra("name");
         zeit = intento.getStringExtra("minuten");
+
+        ImageView btn_walk_button_icon= (ImageView) findViewById(R.id.iv_walk_button_icon);
+        btn_walk_button_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(Summary.this, Navigation.class);
+                Intent intent = new Intent(Summary.this, Navi.class);
+                double[] koordinaten = new double[2];
+
+                if (name.equals("")) {
+                    koordinaten[0] = 48;koordinaten[1] = 16;
+                }else if (name.equals("Schloss Schönbrunn")) {
+                    koordinaten[0] = 48.184947;koordinaten[1] =  16.312229;
+                } else if (name.equals("Belvedere")){
+                    koordinaten[0] = 48.191473;koordinaten[1] = 16.381330;
+                }else if(name.equals("Kunsthistorisches Museum")){
+                    koordinaten[0] = 48.203844;koordinaten[1] = 16.361927;
+                }else if (name.equals("Bitzingers Augustinerkeller")){
+                    koordinaten[0] = 48.204921;koordinaten[1] = 16.368298;
+                }else if (name.equals("Gerstner Cafe-Restaurant")){
+                    koordinaten[0] = 48.203322;koordinaten[1] = 16.370825;
+                }else if (name.equals("Figlmüller")){
+                    koordinaten[0] = 48.209377;koordinaten[1] = 16.374705;
+                }else if (name.equals("Fluc")){
+                    koordinaten[0] = 48.217745;koordinaten[1] = 16.393361;
+                }else if (name.equals("B72")){
+                    koordinaten[0] = 48.214658;koordinaten[1] = 16.340754;
+                }else if (name.equals("Futuregarden")){
+                    koordinaten[0] = 48.198272;koordinaten[1] = 16.353400;
+                }else if (name.equals("Haus des Meeres")){
+                    koordinaten[0] = 48.197781;koordinaten[1] =16.352966;
+                }else if (name.equals("Volksoper")){
+                    koordinaten[0] = 48.224780;koordinaten[1] = 16.350274;
+                }else if (name.equals("Volkstheater")) {
+                    koordinaten[0] = 48.205416;koordinaten[1] = 16.356785;
+                }else{
+                    koordinaten[0] = 48;koordinaten[1] = 16;
+                }
+                intent.putExtra("var_koordinaten", koordinaten);
+                startActivity(intent);
+            }
+        });
+
 
         TextView lbl_entfernung_text = (TextView) findViewById(R.id.lbl_entfernung);
         lbl_entfernung_text.setText(name);
@@ -123,37 +157,42 @@ public class Summary extends AppCompatActivity {
         btn_wiki_logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Summary.this, Browser.class);
                 // Setzen von globalen Variable für Wiki Seite
                 String wiki_base_url = "https://de.wikipedia.org/wiki/";
-                String wiki_url_param ="";
+                String wiki_url_param = "";
                 //ToDo Setzten von Vergleichsoptionen
                 if (destination[0].equals(""))
                     wiki_url_param = "";
-                else if (destination[0].equals("Schloss Schönbrunn"))
+                else if (destination[0].equals("Schloss Schönbrunn")) {
                     wiki_url_param = "Schloss_Schönbrunn";
-                else if (destination[0].equals("Belvedere"))
+                } else if (destination[0].equals("Belvedere")){
+                    wiki_url_param = "Schloss_Belvedere";
+                }else if(destination[0].equals("Kunsthistorisches Museum")){
+                    wiki_url_param ="Kunsthistorisches_Museum";
+                }else if (destination[0].equals("Bitzingers Augustinerkeller")){
                     wiki_url_param = "";
-                else if (destination[0].equals("Kunsthistorisches Museum"))
-                    wiki_url_param = "Kunsthistorisches_Museum";
-                else if (destination[0].equals("Bitzingers Augustinerkeller"))
-                    wiki_url_param = "";
-                else if (destination[0].equals("Gerstner Cafe-Restaurant"))
+                }else if (destination[0].equals("Gerstner Cafe-Restaurant")){
                     wiki_url_param = "Café_Guerbois";
-                else if (destination[0].equals("Figlmüller"))
+                }else if (destination[0].equals("Figlmüller")){
                     wiki_url_param = "Hans_Figlmüller";
-                else if (destination[0].equals("Fluc"))
+                }else if (destination[0].equals("Fluc")){
                     wiki_url_param = "";
-                else if (destination[0].equals("B72"))
+                }else if (destination[0].equals("B72")){
                     wiki_url_param = "Weizer_Straße";
-                else if (destination[0].equals("Futuregarden"))
+                }else if (destination[0].equals("Futuregarden")){
                     wiki_url_param = "";
-                else if (destination[0].equals("Haus des Meeres"))
+                }else if (destination[0].equals("Haus des Meeres")){
                     wiki_url_param = "Haus_des_Meeres";
-                else if (destination[0].equals("Volksoper"))
+                }else if (destination[0].equals("Volksoper")){
                     wiki_url_param = "Volksoper_Wien";
-                else if (destination[0].equals("Volkstheater"))
+                }else if (destination[0].equals("Volkstheater")) {
                     wiki_url_param = "Volkstheater_(Wien)";
+                }else{
+                    wiki_url_param = "";
+                }
+
                 String wiki_url = wiki_base_url + wiki_url_param ;
                 intent.putExtra("var_website_url", String.valueOf (wiki_url));
                 startActivity(intent);
